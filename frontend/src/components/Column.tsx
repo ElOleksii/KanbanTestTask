@@ -17,7 +17,7 @@ const Column = ({ title }: ColumnProps) => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-center">
+    <div className="flex-1 flex flex-col justify-center items-center gap-3">
       <h2 className="text-3xl">{title}</h2>
       <div className="bg-amber-200 flex flex-col p-4 gap-4">
         {exmplCards.map((card, idx) => (
