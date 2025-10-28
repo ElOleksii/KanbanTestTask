@@ -3,6 +3,7 @@ import cors from "cors";
 import connectDB from "./config/db";
 import boardRoutes from "./routes/board.routes";
 import cardRoutes from "./routes/card.routes";
+import columnRoutes from "./routes/column.routes";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -13,7 +14,7 @@ app.use(express.json());
 
 app.use("/api/boards", boardRoutes);
 app.use("/api/cards", cardRoutes);
-// app.use("/api/columns");
+// app.use("/api/columns", columnsRoutes);
 
 const PORT = process.env.PORT || 8000;
 

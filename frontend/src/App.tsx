@@ -1,68 +1,74 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBoards, fetchBoard } from "./store/boardSlice";
+import { type RootState, type AppDispatch } from "./store/store";
+
 import Board from "./components/Board";
-import "./index.css";
-import axios from "axios";
-import CreateBoard from "./components/CreateBord";
-import type { BoardType } from "./types/types";
 import Navbar from "./components/Navbar";
+import CreateBoard from "./components/CreateBord";
+import "./index.css";
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { boards, currentBoard, loading } = useSelector(
+    (state: RootState) => state.board
+  );
+
   const [boardId, setBoardId] = useState("");
-  const [boards, setBoards] = useState<BoardType[]>([]);
-  const [boardData, setBoardData] = useState<BoardType | null>({
-    _id: "",
-    name: "",
-    columns: [],
-  });
 
   useEffect(() => {
-    const savedBoards = localStorage.getItem("boards");
-    if (savedBoards) {
-      setBoards(JSON.parse(savedBoards));
-    } else {
-      axios.get("http://localhost:8000/api/boards").then((res) => {
-        setBoards(res.data);
-        localStorage.setItem("boards", JSON.stringify(res.data));
-      });
-    }
-  }, []);
+    dispatch(fetchBoards());
+  }, [dispatch]);
 
-  const loadBoard = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:8000/api/boards/${boardId}`
-      );
-      setBoardData(res.data);
-    } catch (err) {
-      console.log(err);
+  const loadBoard = () => {
+    if (boardId) {
+      dispatch(fetchBoard(boardId));
     }
   };
 
-  const handleSelectBoard = async (boardId: string) => {
-    const res = await axios.get(`http://localhost:8000/api/boards/${boardId}`);
-    setBoards(res.data);
+  const handleSelectBoard = (boardId: string) => {
+    dispatch(fetchBoard(boardId));
+  };
+
+  const handleBoardCreated = (board: { _id: string }) => {
+    dispatch(fetchBoards());
+    dispatch(fetchBoard(board._id));
   };
 
   return (
     <>
-      <Navbar boards={boards} onSelectBoard={handleSelectBoard} />
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
-        <header className="w-full max-w-4xl flex justify-center gap-4 mb-6">
-          <CreateBoard onBoardCreated={setBoardData} />
+      <Navbar
+        currentBoard={currentBoard}
+        boards={boards}
+        onSelectBoard={handleSelectBoard}
+      />
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4 sm:p-6">
+        <header className="w-full max-w-4xl flex flex-col sm:flex-row sm:justify-center sm:items-center gap-3 sm:gap-4 mb-6">
+          <div className="w-full sm:w-auto">
+            <CreateBoard onBoardCreated={handleBoardCreated} />
+          </div>
+
           <input
-            className="border rounded-lg p-2 flex-1 max-w-sm focus:outline-none focus:ring-1"
+            className="w-full sm:flex-1 border rounded-lg p-2 max-w-full sm:max-w-sm focus:outline-none focus:ring-1"
             placeholder="Enter a board ID here..."
             type="text"
+            value={boardId}
             onChange={(e) => setBoardId(e.target.value)}
           />
           <button
-            className="cursor-pointer text-white rounded-lg px-4 py-2 bg-blue-400 hover:bg-blue-500 transition"
+            className="w-full sm:w-auto cursor-pointer text-white rounded-lg px-4 py-2 bg-blue-400 hover:bg-blue-500 transition disabled:opacity-50"
             onClick={loadBoard}
+            disabled={loading || !boardId}
           >
-            Load
+            {loading ? "Loading..." : "Load"}
           </button>
         </header>
-        <Board board={boardData} />
+
+        {currentBoard ? (
+          <Board board={currentBoard} />
+        ) : (
+          <p className="text-gray-500 mt-10">Choose or load a board</p>
+        )}
       </div>
     </>
   );

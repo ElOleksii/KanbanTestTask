@@ -26,24 +26,21 @@ export const createCard = async (req: Request, res: Response) => {
 
 export const deleteCard = async (req: Request, res: Response) => {
   try {
-    const { id, columnId } = req.params;
+    const { id } = req.params;
 
-    if (
-      !id ||
-      !columnId ||
-      !mongoose.Types.ObjectId.isValid(id) ||
-      !mongoose.Types.ObjectId.isValid(columnId)
-    ) {
-      return res.status(400).json({ message: "Invalid ID" });
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid card ID" });
     }
 
-    await Card.findByIdAndDelete(id);
+    const deletedCard = await Card.findByIdAndDelete(id);
 
-    await Column.findByIdAndUpdate(columnId, {
-      $pull: { cards: id },
-    });
+    if (!deletedCard) {
+      return res.status(404).json({ message: "Card not found" });
+    }
 
-    res.json({ message: "Card deleted" });
+    await Column.findOneAndUpdate({ cards: id }, { $pull: { cards: id } });
+
+    res.status(200).json({ message: "Card deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -63,6 +60,36 @@ export const getCardById = async (req: Request, res: Response) => {
     if (!card) return res.status(404).json({ message: "Card not found" });
 
     res.json(card);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const updateCard = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid card ID" });
+    }
+
+    if (!title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
+    const updatedCard = await Card.findByIdAndUpdate(
+      id,
+      { title, description },
+      { new: true }
+    );
+
+    if (!updatedCard) {
+      return res.status(404).json({ message: "Card not found" });
+    }
+
+    res.status(200).json(updatedCard);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
