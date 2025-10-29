@@ -26,11 +26,14 @@ const CreateCardModal = ({
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:8000/api/cards", {
-        title,
-        description,
-        columnId,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/cards`,
+        {
+          title,
+          description,
+          columnId,
+        }
+      );
 
       onCardCreated(res.data);
       setTitle("");

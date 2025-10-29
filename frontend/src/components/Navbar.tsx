@@ -21,7 +21,7 @@ const Navbar = ({ boards, currentBoard, onSelectBoard }: NavbarProps) => {
   const handleDelete = (boardId: string) => {
     if (
       window.confirm(
-        "Ви впевнені, що хочете видалити цю дошку? Це видалить всі її колонки та картки."
+        "Are you sure you want to delete this board? All data in the board will be lost"
       )
     ) {
       dispatch(deleteBoard(boardId));

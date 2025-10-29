@@ -22,14 +22,16 @@ const initialState: BoardState = {
 };
 
 export const fetchBoards = createAsyncThunk("board/fetchBoards", async () => {
-  const res = await axios.get("http://localhost:8000/api/boards");
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/boards`);
   return res.data as BoardType[];
 });
 
 export const fetchBoard = createAsyncThunk(
   "board/fetchBoard",
   async (id: string) => {
-    const res = await axios.get(`http://localhost:8000/api/boards/${id}`);
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/boards/${id}`
+    );
     return res.data as BoardType;
   }
 );
@@ -38,9 +40,12 @@ export const updateBoard = createAsyncThunk(
   "board/updateBoard",
   async (boardData: { id: string; name: string }) => {
     const { id, name } = boardData;
-    const response = await axios.put(`http://localhost:8000/api/boards/${id}`, {
-      name,
-    });
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL}/api/boards/${id}`,
+      {
+        name,
+      }
+    );
     return response.data;
   }
 );
@@ -48,7 +53,9 @@ export const updateBoard = createAsyncThunk(
 export const deleteBoard = createAsyncThunk(
   "board/deleteBoard",
   async (boardId: string) => {
-    await axios.delete(`http://localhost:8000/api/boards/${boardId}`);
+    await axios.delete(
+      `${import.meta.env.VITE_API_URL}}/api/boards/${boardId}`
+    );
     return boardId;
   }
 );
@@ -64,11 +71,14 @@ export const createCard = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const res = await axios.post("http://localhost:8000/api/cards", {
-        columnId,
-        title,
-        description,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/cards`,
+        {
+          columnId,
+          title,
+          description,
+        }
+      );
       return { card: res.data as CardType, columnId };
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -90,10 +100,13 @@ export const updateCard = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const res = await axios.put(`http://localhost:8000/api/cards/${cardId}`, {
-        title,
-        description,
-      });
+      const res = await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/cards/${cardId}`,
+        {
+          title,
+          description,
+        }
+      );
       return res.data as CardType;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -111,7 +124,7 @@ export const deleteCard = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      await axios.delete(`http://localhost:8000/api/cards/${cardId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/cards/${cardId}`);
       return { cardId, columnId };
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -132,7 +145,7 @@ const saveCardOrder = createAsyncThunk(
       }));
 
       await axios.put(
-        `http://localhost:8000/api/boards/${board._id}/update-order`,
+        `${import.meta.env.VITE_API_URL}/api/boards/${board._id}/update-order`,
         { columns: columnUpdates }
       );
     } catch (error) {

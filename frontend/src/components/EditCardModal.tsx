@@ -32,7 +32,7 @@ const EditCardModal = ({
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/cards/${card._id}`,
+        `${import.meta.env.VITE_API_URL}/api/cards/${card._id}`,
         { title, description }
       );
       onCardUpdated(response.data);

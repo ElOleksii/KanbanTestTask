@@ -28,7 +28,7 @@ const EditBoardModal = ({
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/boards/${board._id}`,
+        `${import.meta.env.VITE_API_URL}/api/boards/${board._id}`,
         { name }
       );
       onBoardUpdated(response.data);

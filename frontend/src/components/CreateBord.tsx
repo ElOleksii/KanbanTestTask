@@ -16,9 +16,12 @@ const CreateBoard = ({ onBoardCreated }: CreateBoardProps) => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/boards", {
-        name: boardName,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/boards`,
+        {
+          name: boardName,
+        }
+      );
       onBoardCreated(res.data);
       setBoardName("");
       setIsOpen(false);
