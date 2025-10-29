@@ -6,7 +6,7 @@ import {
   getBoards,
   updateBoard,
   updateBoardCardOrder,
-} from "../controllers/board.controller";
+} from "../controllers/board.controller.js";
 
 const router = Router();
 
