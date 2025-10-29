@@ -10,6 +10,7 @@ import { createCard, updateCard, deleteCard } from "../store/boardSlice";
 
 interface ColumnProps {
   column: ColumnType;
+  index: number;
 }
 
 const Column = ({ column }: ColumnProps) => {
@@ -79,7 +80,10 @@ const Column = ({ column }: ColumnProps) => {
       <CreateCardModal
         isOpen={isCreateModalOpen}
         onClose={() => setCreateModalOpen(false)}
-        onCardCreated={handleCardCreated}
+        columnId={column._id}
+        onCardCreated={(card) =>
+          handleCardCreated(card.title, card.description)
+        }
       />
       {editingCard && (
         <EditCardModal

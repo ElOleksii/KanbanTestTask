@@ -3,7 +3,7 @@ import {
   createSlice,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { BoardType, CardType, ColumnType } from "../types/types";
+import type { BoardType, CardType } from "../types/types";
 import axios from "axios";
 import { type DropResult } from "@hello-pangea/dnd";
 
