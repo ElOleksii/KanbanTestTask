@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    "types": ["vite/client", "node"],
+    "noEmit": true,
+    "moduleResolution": "bundler"
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
