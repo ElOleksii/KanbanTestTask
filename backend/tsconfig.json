@@ -42,7 +42,8 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "moduleResolution": "nodenext"
   },
   "include": ["src"]
 }

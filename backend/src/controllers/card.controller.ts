@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import Card from "../models/Card";
-import Column from "../models/Column";
+import Card from "../models/Card.js";
+import Column from "../models/Column.js";
 
 export const createCard = async (req: Request, res: Response) => {
   try {

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import Board from "../models/Board";
-import Column from "../models/Column";
+import Board from "../models/Board.js";
+import Column from "../models/Column.js";
 import mongoose from "mongoose";
-import Card from "../models/Card";
+import Card from "../models/Card.js";
 
 export const getBoards = async (req: Request, res: Response) => {
   const boards = await Board.find();
