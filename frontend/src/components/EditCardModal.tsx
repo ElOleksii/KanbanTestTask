@@ -35,8 +35,8 @@ const EditCardModal = ({
         `http://localhost:8000/api/cards/${card._id}`,
         { title, description }
       );
-      onCardUpdated(response.data); // Відправляємо оновлену картку батьку
-      onClose(); // Закриваємо модальне вікно
+      onCardUpdated(response.data);
+      onClose();
     } catch (error) {
       console.error("Failed to update card:", error);
       alert("Не вдалося оновити картку.");
@@ -51,7 +51,7 @@ const EditCardModal = ({
             htmlFor="title"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Заголовок
+            Title
           </label>
           <input
             type="text"
@@ -67,7 +67,7 @@ const EditCardModal = ({
             htmlFor="description"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Опис
+            Description
           </label>
           <textarea
             id="description"
@@ -83,13 +83,13 @@ const EditCardModal = ({
             onClick={onClose}
             className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
           >
-            Скасувати
+            Cancel
           </button>
           <button
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
-            Зберегти
+            Save
           </button>
         </div>
       </form>

@@ -35,19 +35,19 @@ const EditBoardModal = ({
       onClose();
     } catch (error) {
       console.error("Failed to update board:", error);
-      alert("Не вдалося оновити дошку.");
+      alert("Couldn't able to update board");
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Редагувати дошку">
+    <Modal isOpen={isOpen} onClose={onClose} title="Edit Board">
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
           <label
             htmlFor="name"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Назва дошки
+            Board Name
           </label>
           <input
             type="text"
@@ -64,13 +64,13 @@ const EditBoardModal = ({
             onClick={onClose}
             className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
           >
-            Скасувати
+            Cancel
           </button>
           <button
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
-            Зберегти
+            Save
           </button>
         </div>
       </form>

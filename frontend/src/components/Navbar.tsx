@@ -5,7 +5,6 @@ import { type AppDispatch } from "../store/store";
 import { useDispatch } from "react-redux";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import EditBoardModal from "./EditBoardModal";
-import { HiMenuAlt3 } from "react-icons/hi"; // Іконка для мобільного меню
 
 interface NavbarProps {
   boards: BoardType[];
@@ -47,14 +46,14 @@ const Navbar = ({ boards, currentBoard, onSelectBoard }: NavbarProps) => {
                 <button
                   onClick={() => setIsEditModalOpen(true)}
                   className="flex-shrink-0 text-gray-500 hover:text-blue-600"
-                  title="Редагувати назву дошки"
+                  title="Edit Board Name"
                 >
                   <FaEdit size={18} />
                 </button>
                 <button
                   onClick={() => handleDelete(currentBoard._id)}
                   className="flex-shrink-0 text-gray-500 hover:text-red-600"
-                  title="Видалити дошку"
+                  title="Delete Board"
                 >
                   <FaTrash size={16} />
                 </button>
@@ -70,7 +69,8 @@ const Navbar = ({ boards, currentBoard, onSelectBoard }: NavbarProps) => {
             onClick={() => setOpen(!open)}
             className="flex items-center gap-2 rounded-md bg-gray-700 px-3 py-2 text-white hover:bg-gray-600"
           >
-            <span className="text-sm sm:text-lg">History</span>
+            <span className="text-sm sm:text-lg hidden sm:inline">History</span>
+            <span className="text-sm sm:text-lg sm:hidden inline">Edit</span>
           </button>
           {open && (
             <div className="absolute right-0 top-12 z-10 mt-1 w-72 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -104,7 +104,7 @@ const Navbar = ({ boards, currentBoard, onSelectBoard }: NavbarProps) => {
                     className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                   >
                     <FaEdit />
-                    Редагувати дошку
+                    Edit Board
                   </button>
                   <button
                     onClick={() => {
@@ -114,7 +114,7 @@ const Navbar = ({ boards, currentBoard, onSelectBoard }: NavbarProps) => {
                     className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100"
                   >
                     <FaTrash />
-                    Видалити дошку
+                    Delete Board
                   </button>
                 </div>
               )}
