@@ -53,9 +53,7 @@ export const updateBoard = createAsyncThunk(
 export const deleteBoard = createAsyncThunk(
   "board/deleteBoard",
   async (boardId: string) => {
-    await axios.delete(
-      `${import.meta.env.VITE_API_URL}}/api/boards/${boardId}`
-    );
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/boards/${boardId}`);
     return boardId;
   }
 );
