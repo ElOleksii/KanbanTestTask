@@ -5,13 +5,12 @@ import { Draggable } from "@hello-pangea/dnd";
 
 interface CardProps {
   card: CardType;
-  index: number; // Required for Draggable
+  index: number;
   onDelete: (cardId: string) => void;
   onUpdate: (card: CardType) => void;
 }
 
 const Card = ({ card, index, onDelete, onUpdate }: CardProps) => {
-  // Axios logic is removed. Column.tsx now handles the dispatch.
   const handleDeleteClick = () => {
     const isConfirmed = window.confirm(
       `Are you sure you want to delete the card "${card.title}"?`
@@ -27,7 +26,7 @@ const Card = ({ card, index, onDelete, onUpdate }: CardProps) => {
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps} // Allows dragging from anywhere on the card
+          {...provided.dragHandleProps}
           className={`group rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-lg ${
             snapshot.isDragging ? "shadow-xl ring-2 ring-blue-500" : ""
           }`}

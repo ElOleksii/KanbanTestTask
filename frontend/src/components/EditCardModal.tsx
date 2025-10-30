@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import type { CardType } from "../types/types";
-// Припускаємо, що у вас є компонент Modal, аналогічний до EditBoardModal
 import Modal from "./Modal";
 
 interface EditCardModalProps {
@@ -20,7 +19,6 @@ const EditCardModal = ({
   const [title, setTitle] = useState(card.title);
   const [description, setDescription] = useState(card.description);
 
-  // Синхронізуємо стан, якщо відкривається модальне вікно для іншої картки
   useEffect(() => {
     setTitle(card.title);
     setDescription(card.description);
