@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoards, fetchBoard, setBoards } from "./store/boardSlice";
 import { type RootState, type AppDispatch } from "./store/store";
+import { v4 as uuidv4 } from "uuid";
 
 import Board from "./components/Board";
 import Navbar from "./components/Navbar";
@@ -15,19 +16,32 @@ function App() {
   );
 
   const [boardId, setBoardId] = useState("");
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const savedBoards = localStorage.getItem("boards");
+    let savedUserId = localStorage.getItem("userId");
+    if (!savedUserId) {
+      savedUserId = uuidv4();
+      localStorage.setItem("userId", savedUserId);
+    }
+    setUserId(savedUserId);
+  }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+    const savedBoards = localStorage.getItem(`boards_user_${userId}`);
     if (savedBoards) {
       dispatch(setBoards(JSON.parse(savedBoards)));
     } else {
       dispatch(fetchBoards());
     }
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
-    localStorage.setItem("boards", JSON.stringify(boards));
-  }, [boards]);
+    if (userId && boards.length > 0) {
+      localStorage.setItem(`boards_user_${userId}`, JSON.stringify(boards));
+    }
+  }, [boards, userId]);
 
   const loadBoard = () => {
     if (boardId) {
