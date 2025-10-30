@@ -38,8 +38,17 @@ const Column = ({ column }: ColumnProps) => {
     setEditingCard(null);
   };
 
+  const isEmpty = column.cards.length === 0;
+
   return (
-    <div className="flex w-72 flex-shrink-0 flex-col rounded-lg bg-gray-100 p-3 shadow-sm min-h-[20rem]">
+    <div
+      className={`flex w-72 flex-shrink-0 flex-col rounded-lg p-3 shadow-sm min-h-[20rem] transition 
+      ${
+        isEmpty
+          ? "bg-gray-50 border-2 border-dashed border-gray-300"
+          : "bg-gray-100"
+      }`}
+    >
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold text-gray-800">{column.name}</h3>
         <span className="rounded-full bg-gray-200 px-2 py-1 text-sm font-medium text-gray-600">
@@ -52,19 +61,23 @@ const Column = ({ column }: ColumnProps) => {
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className={`flex flex-grow flex-col gap-3 overflow-y-auto ${
-              snapshot.isDraggingOver ? "bg-blue-100" : ""
-            }`}
+            className={`flex flex-grow flex-col gap-3 overflow-y-auto rounded-md p-1
+              ${snapshot.isDraggingOver ? "bg-blue-100" : ""}
+              ${isEmpty ? "items-center justify-center text-gray-400" : ""}`}
           >
-            {column.cards.map((card, index) => (
-              <Card
-                key={card._id}
-                card={card}
-                index={index}
-                onDelete={handleCardDeleted}
-                onUpdate={setEditingCard}
-              />
-            ))}
+            {isEmpty ? (
+              <p className="text-sm italic select-none">No cards yet</p>
+            ) : (
+              column.cards.map((card, index) => (
+                <Card
+                  key={card._id}
+                  card={card}
+                  index={index}
+                  onDelete={handleCardDeleted}
+                  onUpdate={setEditingCard}
+                />
+              ))
+            )}
             {provided.placeholder}
           </div>
         )}

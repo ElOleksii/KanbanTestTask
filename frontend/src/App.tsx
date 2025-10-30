@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBoards, fetchBoard } from "./store/boardSlice";
+import { fetchBoards, fetchBoard, setBoards } from "./store/boardSlice";
 import { type RootState, type AppDispatch } from "./store/store";
 
 import Board from "./components/Board";
@@ -17,8 +17,17 @@ function App() {
   const [boardId, setBoardId] = useState("");
 
   useEffect(() => {
-    dispatch(fetchBoards());
+    const savedBoards = localStorage.getItem("boards");
+    if (savedBoards) {
+      dispatch(setBoards(JSON.parse(savedBoards)));
+    } else {
+      dispatch(fetchBoards());
+    }
   }, [dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem("boards", JSON.stringify(boards));
+  }, [boards]);
 
   const loadBoard = () => {
     if (boardId) {

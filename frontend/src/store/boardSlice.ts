@@ -210,6 +210,9 @@ const boardSlice = createSlice({
       const [removedCard] = sourceCol.cards.splice(source.index, 1);
       destCol.cards.splice(destination.index, 0, removedCard);
     },
+    setBoards: (state, action) => {
+      state.boards = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -327,5 +330,6 @@ const boardSlice = createSlice({
   },
 });
 
-export const { clearCurrentBoard, moveCardOptimistic } = boardSlice.actions;
+export const { clearCurrentBoard, moveCardOptimistic, setBoards } =
+  boardSlice.actions;
 export default boardSlice.reducer;
