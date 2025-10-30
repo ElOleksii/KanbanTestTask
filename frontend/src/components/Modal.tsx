@@ -1,4 +1,3 @@
-// Modal.tsx
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -16,7 +15,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
     >
       <div
         className="bg-white rounded-lg p-6 w-96 shadow-xl"
-        onClick={(e) => e.stopPropagation()} // щоб не закривалося при кліку всередині
+        onClick={(e) => e.stopPropagation()}
       >
         {title && <h2 className="text-lg font-bold mb-4">{title}</h2>}
         {children}

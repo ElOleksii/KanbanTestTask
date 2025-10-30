@@ -55,13 +55,13 @@ const CreateBoard = ({ onBoardCreated }: CreateBoardProps) => {
             />
             <div className="flex justify-end gap-2">
               <button
-                className="px-3 py-1 rounded bg-gray-300 hover:bg-gray-400"
+                className="px-3 py-1 rounded bg-gray-300 hover:bg-gray-400 cursor-pointer"
                 onClick={() => setIsOpen(false)}
               >
                 Cancel
               </button>
               <button
-                className="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
+                className="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
                 onClick={handleSubmit}
                 disabled={loading}
               >

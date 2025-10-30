@@ -45,14 +45,14 @@ const Navbar = ({ boards, currentBoard, onSelectBoard }: NavbarProps) => {
               <div className="hidden items-center gap-3 sm:flex">
                 <button
                   onClick={() => setIsEditModalOpen(true)}
-                  className="flex-shrink-0 text-gray-500 hover:text-blue-600"
+                  className="flex-shrink-0 text-gray-500 hover:text-blue-600 cursor-pointer"
                   title="Edit Board Name"
                 >
                   <FaEdit size={18} />
                 </button>
                 <button
                   onClick={() => handleDelete(currentBoard._id)}
-                  className="flex-shrink-0 text-gray-500 hover:text-red-600"
+                  className="flex-shrink-0 text-gray-500 hover:text-red-600 cursor-pointer"
                   title="Delete Board"
                 >
                   <FaTrash size={16} />
@@ -69,7 +69,9 @@ const Navbar = ({ boards, currentBoard, onSelectBoard }: NavbarProps) => {
             onClick={() => setOpen(!open)}
             className="flex items-center gap-2 rounded-md bg-gray-700 px-3 py-2 text-white hover:bg-gray-600"
           >
-            <span className="text-sm sm:text-lg hidden sm:inline">History</span>
+            <span className="text-sm sm:text-lg hidden sm:inline cursor-pointer">
+              History
+            </span>
             <span className="text-sm sm:text-lg sm:hidden inline">Edit</span>
           </button>
           {open && (

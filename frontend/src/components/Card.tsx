@@ -36,7 +36,7 @@ const Card = ({ card, index, onDelete, onUpdate }: CardProps) => {
 
           <div className="mt-3 flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
             <button
-              className="text-gray-400 hover:text-blue-500"
+              className="text-gray-400 cursor-pointer hover:text-blue-500"
               title="Edit Card"
               onClick={() => onUpdate(card)}
             >
@@ -44,7 +44,7 @@ const Card = ({ card, index, onDelete, onUpdate }: CardProps) => {
             </button>
             <button
               onClick={handleDeleteClick}
-              className="text-gray-400 hover:text-red-500"
+              className="text-gray-400 cursor-pointer hover:text-red-500"
               title="Delete Card"
             >
               <MdOutlineDelete size={18} />
